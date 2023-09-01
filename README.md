@@ -12,8 +12,9 @@
 <br />
 
 
-[![](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/julien-peignon/)
+[![Black][black-shield]][black-url] 
+[![LinkedIn][linkedin-shield]][linkedin-url]
+[![MIT License][license-shield]][license-url]
 
 ## Table of Contents
 
@@ -23,6 +24,7 @@
   - [Project Structure](#project-structure)
   - [Data used](#data-used)
 - [Contributing](#contributing)
+- [License](#license)
 - [Contact](#contact)
 
 ## About the Project
@@ -49,23 +51,24 @@ INSEE (the National Institute of Statistics and Economic Studies) receives daily
 
 ### Project Structure
 
-- `requirements.txt` : Contains all the necessary dependencies to run this project.
-- `data-viz.qmd` : JavaScript code for plotting accuracy and Sankey diagrams.
+- `requirements.txt` : Contains all the necessary dependencies to run this project
+- `LICENSE.txt` : Contains the project's license terms
+- `data-viz.qmd` : JavaScript code for plotting accuracy and Sankey diagrams
 - `img/`: Contains images used in the README
-- `src/`:  Folder containing the source code of the project.
-  - `features/`: Scripts dedicated to data preparation and transformation.
+- `src/`:  Folder containing the source code of the project
+  - `features/`: Scripts dedicated to data preparation and transformation
       - `descriptive_statistics.py`: Generates descriptive statistics
       - `dic_cleaning_label.py`: Contains a dictionary of regular expressions for cleaning labels
       - `functions_clean_ean.py`: Functions for cleaning EAN (barcodes) codes
       - `function_clean_labels.py`: Functions for cleaning labels
       - `functions_get_true_label.py`: Functions for labeling data by matching
-  - `models/`: Scripts to create, train, and evaluate models.
+  - `models/`: Scripts to create, train, and evaluate models
       - `evaluation.py`: Evaluates the performance of the models
       - `flat_fasttext.py`: Implementation of the FastText model in a "flat" (non-hierarchical) architecture
       - `hiclass.py`: Implementation of the HiClass package for hierarchical classification
       - `lcpl_fasttext.py`: Variant of the FastText model in Local Classifier per Parent Level (experimental, not used in practice)
       - `lcpn_fasttext.py`: Variant of the FastText model in Local Classifier per Parent Node
-  - `visualization/`: Scripts for data visualization and model results.
+  - `visualization/`: Scripts for data visualization and model results
       - `export_data_quarto.py`: Exports data and metrics in a format suitable for visualization
 - `notebooks/`: Contains the Jupyter Notebooks for handling the developed functions
     - `clean_data.ipynb`: Notebook for data cleaning and preparation
@@ -90,6 +93,11 @@ All contributions are welcome. You can either [report a bug](https://gitlab.inse
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
 ## Contact
 
 Lino Galiana - [linogaliana](https://github.com/linogaliana) - lino.galiana@insee.fr
@@ -98,3 +106,10 @@ Martin Monziols - martin.monziols@insee.fr
 
 Julien Peignon - [JulienPeignon](https://github.com/JulienPeignon) - julien.peignon@ensae.fr
 
+
+[black-shield]: https://img.shields.io/badge/code%20style-black-000000.svg
+[black-url]: https://github.com/psf/black
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/JulienPeignon/supervised-learning-coicop/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/julien-peignon/
