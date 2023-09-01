@@ -1,0 +1,258 @@
+---
+title: "Accuracy & Sankey Graphics"
+echo: false
+format: html
+---
+
+```{python}
+import yaml
+
+def import_yaml_config(location: str) -> dict:
+    """
+    import_yaml_config:
+        wrapper to easily import yaml
+
+    @param location (str): File path
+    """
+    with open(location, "r", encoding="utf-8") as stream:
+        config = yaml.safe_load(stream)
+
+    return config
+
+config = import_yaml_config('configuration/config.yaml')
+
+path_data = config['path']['path_data']
+accuracy = config['data_viz']['accuracy']
+sankey = config['data_viz']['sankey']
+```
+
+```{ojs}
+db = DuckDBClient.of({
+  accuracy: FileAttachment(path_data + accuracy)
+})
+```
+
+```{ojs}
+accuracy = db.query(
+  `SELECT * FROM accuracy
+`
+)
+```
+```{ojs}
+accuracy_all_sample = d3.sum(accuracy, function(d) { return d.NB_CORRECT_PRED; }) / d3.sum(accuracy, function(d) { return d.NB_OCCURENCE; })
+```
+
+```{ojs}
+category = ["Poste", "Sous-classe", "Classe", "Groupe", "Division"];
+
+viewof categoryCheckbox = Inputs.select(
+  category, 
+  { 
+    value: "Poste", 
+    label: "Category"
+  }
+);
+```
+
+```{ojs}
+viewof n = Inputs.range([5, 40], {step: 5, label: "Number"})
+```
+
+```{ojs}
+viewof ascending = Inputs.radio(["Descending ⬇️", "Ascending ⬆️"], {value: "Descending ⬇️"})
+```
+
+```{ojs}
+viewof choice_variable = Inputs.radio(
+  ["Taille de la classe", "Performance dans la prédiction"],
+  {value: "Taille de la classe", label: "Choix de l'ordre"})
+```
+
+```{ojs}
+filtered = accuracy.filter(item => categoryCheckbox == item.CATEGORY);
+```
+
+```{ojs}
+ranking_function = ascending === "Ascending ⬆️" ? d3.ascending : d3.descending;
+```
+
+```{ojs}
+newOrder = choice_variable === "Performance dans la prédiction"
+  ? filtered.slice().sort((a, b) => ranking_function(a.FREQ_CORRECT_PRED, b.FREQ_CORRECT_PRED))
+  : filtered.slice().sort((a, b) => ranking_function(a.NB_OCCURENCE, b.NB_OCCURENCE));
+```
+
+```{ojs}
+slicedOrder = newOrder.map(d => d.COICOP_DESC).slice(0, n)
+```
+
+
+```{ojs}
+grid = await html`<div style="
+              background: #fff;
+              float: left;
+              margin: 0;
+              display: grid;
+              margin-bottom: 80px;
+              margin-top: 80px;
+              width: 2000px;
+              grid-template-areas: 
+                'a a'
+                'b b'
+                'c d'
+                'p1 p2'
+                'e f' ;
+              grid-gap: 1px;
+            ">
+              <div name="a" style="grid-area: a; position: relative;">${viewof categoryCheckbox}</div>
+              <div name="b" style="grid-area: b; position: relative;">${viewof n}</div>
+              <div name="c" style="grid-area: c; position: relative;">${viewof choice_variable}</div>
+              <div name="d" style="grid-area: d; position: relative;">${viewof ascending}</div>
+              <div name="p1" style="grid-area: p1; position: relative;">${plt1}</div>
+              <div name="p2" style="grid-area: p2; position: relative">${plt2}</div>
+              <div name="leg1" style="grid-area: e; position: relative;">${leg1}</div>
+              <div name="leg2" style="grid-area: f; position: relative;">${leg2}</div>
+            </div>`
+```
+
+
+```{ojs}
+plt1 = addTooltips(
+  Plot.plot({
+    marginRight: 300,
+    marginTop: 10,
+    width: width/2, 
+    height: 700,
+    x: {
+      label: null,
+      //axis: null
+      },
+    y: { label: null, domain: slicedOrder},
+    color: {legend: false, 
+      type: "linear",
+      scheme: "YlOrRd"},
+    style: {fontSize: "16px"},
+    marks: [
+      Plot.ruleX([accuracy_all_sample]),
+      Plot.axisY({anchor: "right", labelAnchor: "top", tickSize: 0}),
+      Plot.barX(filtered, {
+        x: "FREQ_CORRECT_PRED",
+        y: "COICOP_DESC",
+        fill: "NB_OCCURENCE", 
+        //sort: { y: "x", reverse: ascending, limit: n, domain: newOrder},
+        textStyle: { fontSize: 16 },
+        title: d => `Taux de bonne prédiction: ${(Math.round(d.FREQ_CORRECT_PRED * 100)).toFixed(0)}%`
+      }),
+    ],
+}),
+{ fill: "gray", opacity: 0.5, "stroke-width": "3px", stroke: "red" }
+)
+```
+
+
+```{ojs}
+leg1 = Plot.legend(
+  {
+    color: {
+      domain: [d3.min(filtered, d => d.NB_OCCURENCE), d3.max(filtered, d => d.NB_OCCURENCE)],
+      legend: true, type: "linear", scheme: "YlOrRd"
+    }
+  })
+```
+
+```{ojs}
+plt2 = addTooltips(
+  Plot.plot({
+  width: width/2, 
+  height: 700,
+  marginTop: 10,
+  //marginLeft: 4,
+  //x: { axis: null },
+  y: { label: null, domain: slicedOrder, axis: null, anchor: "right"},
+  color: {legend: false, 
+    type: "linear",
+    scheme: "Cividis"},
+  style: {fontSize: "16px"},
+  marks: [
+    Plot.barX(filtered, {
+      x: "NB_OCCURENCE",
+      y: "COICOP_DESC",
+      fill: "FREQ_CORRECT_PRED", 
+      title: d => `${d.NB_OCCURENCE} produits`,
+      //sort: { y: "x", reverse: ascending},
+      textStyle: { fontSize: 16 },
+    }),
+  ],
+}),
+{ fill: "gray", opacity: 0.5, "stroke-width": "3px", stroke: "red" }
+)
+```
+
+```{ojs}
+leg2 = Plot.legend(
+  {
+    color: {
+      domain: [d3.min(filtered, d => d.FREQ_CORRECT_PRED), d3.max(filtered, d => d.FREQ_CORRECT_PRED)],
+      legend: true, type: "linear", scheme: "Cividis"
+    }
+  })
+```
+
+```{ojs}
+Plot = require("https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.8/dist/plot.umd.min.js")
+```
+
+```{ojs}
+import {addTooltips} from "@mkfreeman/plot-tooltip"
+```
+
+```{ojs}
+import {sankeyCreator} from "@jurb/sankey-diagram-reusable-and-csv-friendly-version"
+import {convertData} from "@jurb/sankey-diagram-reusable-and-csv-friendly-version"
+```
+
+```{ojs}
+function unique(data, accessor) {
+  return Array.from(new Set(accessor ? data.map(accessor) : data));
+}
+```
+
+```{ojs}
+sankey = DuckDBClient.of({
+  sankey: FileAttachment(path_data + sankey)
+})
+
+df_sankey = sankey.query(
+  `SELECT 
+    COALESCE(source, 'Non suivi') AS source, 
+    COALESCE(target, 'Non suivi') AS target, 
+    value 
+    FROM sankey
+    WHERE CATEGORY = '${categoryCheckbox_sankey}'`
+)
+```
+
+```{ojs}
+viewof categoryCheckbox_sankey = Inputs.select(
+  category, 
+  { 
+    value: "Poste", 
+    label: "Categorie 🗃"
+  }
+);
+```
+
+```{ojs}
+liste_produits = unique(df_sankey.map(d => d.source))
+viewof produitCheckbox_sankey = Inputs.select(liste_produits, {value: "Vins supérieurs", label: "Produit 🍔"})
+```
+
+```{ojs}
+df_sankey_filtered = df_sankey.filter(item => produitCheckbox_sankey == item.source);
+```
+
+<div style="width:1400px; height:400px; margin-left: -200px; margin-bottom: 300px;">
+```{ojs}
+p = sankeyCreator(convertData(df_sankey_filtered))
+```
+</div>
