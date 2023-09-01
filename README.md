@@ -2,7 +2,11 @@
 <div align="center">
    
   <h3 align="center">Automated Classification Algorithms for Cash Register Data</h3>
-
+  
+  <p align="center">
+    Experimental Methodologies for Enhanced Accuracy in Consumer Price Indexing
+  </p>
+  
   <br />
 
   <a>
@@ -16,21 +20,22 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![MIT License][license-shield]][license-url]
 
-## Table of Contents
+## Table of Contents 📜 
 
-- [Table of Contents](#table-of-contents)
-- [About the Project](#about-the-project)
-  - [Built with](#built-with)
-  - [Project Structure](#project-structure)
-  - [Data used](#data-used)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- [Table of Contents 📜](#table-of-contents-)
+- [About the Project 📌](#about-the-project-)
+  - [Built with 🔨](#built-with-)
+  - [Project Structure 📂](#project-structure-)
+  - [Data used 📊](#data-used-)
+- [Contributing 🤝](#contributing-)
+- [License 🔒](#license-)
+- [Contact 📞](#contact-)
 
-## About the Project
+<a name="about-the-project"></a>
+## About the Project 📌
 
 <p align="justify">
-INSEE (the National Institute of Statistics and Economic Studies) receives daily cash register data from French hypermarkets and supermarkets, which it uses to calculate the Consumer Price Index (CPI), used to estimate inflation, and the Sales Revenue Index (SRI). The nomenclature used for the CPI is Coicop (Classification of Individual Consumption According to Purpose), which groups consumed goods and services by function classes (for example, drinks are differentiated into mineral water, soda, etc.). To classify food products from the cash register data into this typology, INSEE uses a product reference list provided by a company specializing in supermarket data collection. However, this reference list does not cover the data of hard-discounters. The goal of the project is to explore supervised learning algorithms to assign hard-discounters products to a Coicop category to improve the construction of Consumer Price Index.
+INSEE (the National Institute of Statistics and Economic Studies) collects daily transaction data from French hypermarkets and supermarkets for the purpose of calculating key economic indicators such as the Consumer Price Index (CPI) and the Sales Revenue Index (SRI). The CPI, which serves as a measure for inflation, employs the Coicop (Classification of Individual Consumption According to Purpose) nomenclature to categorize various consumer goods and services by their functional classes— for instance, beverages are subdivided into categories like mineral water and soda. For the purpose of this classification, INSEE relies on a specialized product reference list provided by a third-party company with expertise in supermarket data. Notably, this list does not encompass data from hard-discount stores. The objective of this project is to investigate the application of supervised machine learning algorithms for categorizing hard-discounter products under the Coicop taxonomy, with the aim of enhancing the accuracy of Consumer Price Index calculations. This work was conducted during an internship at INSEE and should be considered as experimental research; it does not represent a finalized or official project of INSEE.
 </p>
 
 <br />
@@ -39,8 +44,8 @@ INSEE (the National Institute of Statistics and Economic Studies) receives daily
 </div>
 <br />
 
-
-### Built with
+<a name="built-with"></a>
+### Built with 🔨
 
 * [Python](https://python.org)
 * [spaCy](https://spacy.io/)
@@ -49,11 +54,12 @@ INSEE (the National Institute of Statistics and Economic Studies) receives daily
 * [quarto](https://quarto.org/)
 * [Observable](https://observablehq.com/)
 
-### Project Structure
+<a name="project-structure"></a>
+### Project Structure 📂
 
 - `requirements.txt` : Contains all the necessary dependencies to run this project
 - `LICENSE.txt` : Contains the project's license terms
-- `data-viz.qmd` : JavaScript code for plotting accuracy and Sankey diagrams
+- `data-viz.qmd` : JavaScript code for plotting accuracy and sankey diagrams
 - `img/`: Contains images used in the README
 - `src/`:  Folder containing the source code of the project
   - `features/`: Scripts dedicated to data preparation and transformation
@@ -79,12 +85,14 @@ INSEE (the National Institute of Statistics and Economic Studies) receives daily
     <img src="img/sankey.png" alt="sankey" width="1100" height="500">
 </div>
 <br />
-    
-### Data used
+
+<a name="data-used"></a>
+### Data used 📊
 
 The code is designed to be fully reproducible; however, the actual transactional data used for the project cannot be shared due to its confidential nature. The code itself contains no sensitive or proprietary information related to this data.
 
-## Contributing
+<a name="contributing"></a>
+## Contributing 🤝
 
 All contributions are welcome. You can either [report a bug](https://gitlab.insee.fr/ssplab/codif-ipc/ddc_lidl/-/issues) or contribute directly using the following typical workflow :
 
@@ -94,11 +102,13 @@ All contributions are welcome. You can either [report a bug](https://gitlab.inse
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
+<a name="license"></a>
+## License 🔒 
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-## Contact
+<a name="contact"></a>
+## Contact 📞
 
 Lino Galiana - [linogaliana](https://github.com/linogaliana) - lino.galiana@insee.fr
 
