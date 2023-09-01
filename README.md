@@ -20,16 +20,15 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![MIT License][license-shield]][license-url]
 
-## Table of Contents 📜 
+## Table of Contents 📜
 
-- [Table of Contents 📜](#table-of-contents-)
-- [About the Project 📌](#about-the-project-)
-  - [Built with 🔨](#built-with-)
-  - [Project Structure 📂](#project-structure-)
-  - [Data used 📊](#data-used-)
-- [Contributing 🤝](#contributing-)
-- [License 🔒](#license-)
-- [Contact 📞](#contact-)
+- [About the Project](#about-the-project-)
+  - [Built with](#built-with-)
+  - [Project Structure](#project-structure-)
+  - [Data used](#data-used-)
+- [Contributing](#contributing-)
+- [License](#license-)
+- [Contact](#contact-)
 
 <a name="about-the-project"></a>
 ## About the Project 📌
