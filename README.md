@@ -5,6 +5,9 @@
 
   <br />
 
+  <a>
+    <img src="img/photo_caisse.png" alt="Logo" width="800" height="200">
+  </a>
 </div>
 <br />
 
@@ -87,8 +90,6 @@ All contributions are welcome. You can either [report a bug](https://gitlab.inse
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-
 ## Contact
 
 Lino Galiana - [linogaliana](https://github.com/linogaliana) - lino.galiana@insee.fr
