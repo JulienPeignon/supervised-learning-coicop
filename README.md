@@ -93,7 +93,7 @@ The code is designed to be fully reproducible; however, the actual transactional
 <a name="contributing"></a>
 ## Contributing 🤝
 
-All contributions are welcome. You can either [report a bug](https://gitlab.insee.fr/ssplab/codif-ipc/ddc_lidl/-/issues) or contribute directly using the following typical workflow :
+All contributions are welcome. You can either [report a bug](https://github.com/JulienPeignon/supervised-learning-coicop/issues) or contribute directly using the following typical workflow :
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
